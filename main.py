@@ -79,9 +79,9 @@ if __name__ == '__main__':
     print('------------------------------------------------')
 
     # printing generated elements from multiple-layered nested list
-    print('Генератоп элементов из списка списков любого уровня вложенности')
-    flat_list_3 = [item for item in flat_generator(nested_list2)]
-    for el in flat_list_3:
+    print('Генератор элементов из списка списков любого уровня вложенности')
+    flat_list = [item for item in flat_generator(nested_list2)]
+    for el in flat_list:
         print(el)
 
     print()
