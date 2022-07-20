@@ -11,26 +11,24 @@ nested_list = [
 
 
 class Flat_iterator:
-    def __init__(self, nested_list):
-        self.start = -1
-        self.end = len(nested_list)
+    def __init__(self, main_list):
+        self.main_list = main_list
+        self.main_list_cursor = -1
+        self.nested_list_cursor = 0
+        self.list_len = len(self.main_list)
 
     def __iter__(self):
+        self.main_list_cursor += 1
+        self.nested_list_cursor = 0
         return self
 
     def __next__(self):
-        self.start += 1
-        if self.start == self.end:
+        if self.nested_list_cursor == len(self.main_list[self.main_list_cursor]):
+            iter(self)
+        if self.main_list_cursor == self.list_len:
             raise StopIteration
-        return self
-
-    # reassigning "__str__" method to print out the result of itteration el by el
-    def __str__(self):
-        return '\n'.join(str(el)for el in nested_list[self.start])
-
-    # method to print out the "unpacked" nested list as a single list of all elements
-    def chain_list(nested_list):
-        print(list(chain.from_iterable(nested_list)))
+        self.nested_list_cursor += 1
+        return self.main_list[self.main_list_cursor][self.nested_list_cursor-1]
 
 
 # Написать генератор, который принимает список списков, и возвращает их плоское представление
@@ -66,7 +64,8 @@ if __name__ == '__main__':
 
     # printing "unpacked" nested list in a single list of all elements
     print('Печатаем элементы вложенного списка списков в один список')
-    Flat_iterator.chain_list(nested_list)
+    flat_list = [item for item in Flat_iterator(nested_list)]
+    print(flat_list)
 
     print('--------------------------------------------')
 
